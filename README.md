@@ -1,54 +1,69 @@
-# Advanced Project Environment Generator
+# ML Project Scaffold CLI
 
-This is a Python script to quickly generate a structured and OS-specific Python project environment. It creates all necessary directories, configuration files, and optionally, a basic test suite.
+**CLI tool to scaffold machine learning project directories with config files, test structure, and OS-specific setup (Windows/Linux).**
 
-## Features
+This tool helps you quickly start machine learning or data science projects with a consistent folder structure and useful boilerplate files.
 
-- Creates a complete Python project structure with folders for:
-  - Source code (`src/`)
-  - Data (`data/raw`, `data/interim`, etc.)
-  - Models, notebooks, references, reports
-- Adds essential files:
-  - `README.md`, `requirements.txt`, `setup.cfg`, `pyproject.toml`, `Makefile`
-- OS-specific configuration (`config_windows.ini` or `config_linux.ini`)
-- Optional test setup (`tests/test_main.py`)
+---
 
-## Usage
+## 🚀 Features
 
-Run the script with Python 3:
+- OS-specific config file (`config_windows.ini` or `config_linux.ini`)
+- Organized data directories (`raw`, `processed`, `external`, etc.)
+- Structured `src/` folder with modular Python files
+- Optional test folder with a sample test
+- Ready-to-use `Makefile`, `pyproject.toml`, and `setup.cfg`
+- Docker-compatible for zero-setup usage
+
+---
+
+## 🐳 Using with Docker
+
+### 1. Build the Docker image
 
 ```bash
-python project_generator.py
+docker build -t ml-scaffold .
 ```
 
-You will be prompted to:
+### 2. Run the generator
 
-- Choose the target OS (Linux or Windows)
-- Enter the project name
-- Enter the main module name
-- Choose whether to include a `tests` folder
-
-The generator will detect your OS automatically, but allows manual override for Linux/Windows-specific settings.
-
-## Example
-
-```
-=== Advanced Project Environment Generator ===
-
-Generate project structure for Linux or Windows? [linux/windows]: linux
-Project name: my-awesome-project
-Name of your main Python module (e.g., myproject): awesome_module
-Include tests folder? [y/n]: y
-
-✅ Project 'my-awesome-project' created with module 'awesome_module' for Linux.
+```bash
+docker run --rm -v $(pwd):/output ml-scaffold \
+  --project my-ml-project \
+  --module core_module \
+  --os linux \
+  --tests y
 ```
 
-## Output Structure
+This will create a folder named `my-ml-project` inside your current directory with the full structure.
+
+---
+
+## 🧾 CLI Usage (without Docker)
+
+If you prefer to run the script directly (you need Python 3.8+):
+
+```bash
+python project_generator.py \
+  --project my-ml-project \
+  --module core_module \
+  --os linux \
+  --tests y
+```
+
+### Arguments
+
+- `--project`: Name of the project (required)
+- `--module`: Name of the main module under `src/` (required)
+- `--os`: Target OS (`linux` or `windows`) — defaults to auto-detect
+- `--tests`: Include tests folder? (`y` or `n`)
+
+---
+
+## 📂 Example Output
 
 ```
-my-awesome-project/
-├── Makefile
-├── README.md
+my-ml-project/
 ├── config_linux.ini
 ├── data/
 │   ├── external/
@@ -59,22 +74,31 @@ my-awesome-project/
 ├── models/
 ├── notebooks/
 ├── pyproject.toml
+├── README.md
 ├── references/
 ├── reports/
 │   └── figures/
 ├── requirements.txt
 ├── setup.cfg
+├── Makefile
+├── LICENSE
 ├── src/
-│   └── awesome_module/
+│   └── core_module/
 │       ├── __init__.py
 │       ├── config.py
 │       ├── dataset.py
 │       ├── features.py
-│       ├── modeling/
-│       │   ├── __init__.py
-│       │   ├── predict.py
-│       │   └── train.py
-│       └── plots.py
+│       ├── plots.py
+│       └── modeling/
+│           ├── __init__.py
+│           ├── train.py
+│           └── predict.py
 └── tests/
-    └── test_main.py  # Optional
+    └── test_main.py  # If --tests y
 ```
+
+---
+
+## 🧪 License
+
+MIT License
