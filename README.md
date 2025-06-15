@@ -44,7 +44,7 @@ This will create a folder named `my-ml-project` inside your current directory wi
 If you prefer to run the script directly (you need Python 3.8+):
 
 ```bash
-python project_generator.py \
+python app.py \
   --project my-ml-project \
   --module core_module \
   --os linux \
@@ -96,9 +96,3 @@ my-ml-project/
 └── tests/
     └── test_main.py  # If --tests y
 ```
-
----
-
-## 🧪 License
-
-MIT License
